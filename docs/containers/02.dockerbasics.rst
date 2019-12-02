@@ -1,22 +1,11 @@
-======================
-Introduction to Docker
-======================
+======
+Docker
+======
 
-In this section, we will learn more about docker
+Docker is a platform (among several) for building and executing containers.
 
-.. toctree::
-
-  :maxdepth: 1
-  :caption: Sections:
-
-  01.Docker Terminologies
-  02.Getting Started: Prerequisites
-  03.Using Existing container: Demo hello-world
-  04.Illustrate core docker commands
-
-
-In the Docker world
-====================
+Terminologies in the Docker world
+================================
 
 **Containers**
 
@@ -65,14 +54,47 @@ With a Dockerfile in hand, we can build an image from it by
 We can store the docker images we create in image registries. Registries are organized into collections of images called *repositories*.
 
 `Docker Hub <https://hub.docker.com/>`_ is a central, public repository of images.
+The docker hub contains images contributed by individual users and organizations as well as
+“official images”. Explore the offcial docker images here: https://hub.docker.com/explore/
 
-Getting Started
-===============
+**Image Tags**
+Docker supports the notion of image tags, similar to tags in a git repository. Tags identify a specific version of an image.
+
+The full name of an image on the Docker Hub is comprised of components separated by slashes.
+The components include a “repository” (which could be owned by an individual or organization),
+the “name”, and the “tag”. For example, an image with the full name
+
+.. code-block::bash
+   $ tacc/gateways19:0.1
+
+would refer to the gateways19 image within the “tacc” repository and have a
+tag of “0.1”.
+
+TACC maintains multiple repositories on the Docker Hub including:
+
+- tacc
+- taccsciapps
+- tapis
+- abaco
+
+**Docker Worflow**
+
+.. figure:: images/docker_workflow.png
+   :height: 400
+   :width: 800
+   :align: center
+   :alt: Simple Docker Workflow
+
+
+
+
+Getting Started With Docker
+===========================
 
 Prerequisites:
 --------------
 
-- Install Docker on your laptop:
+* Install Docker on your laptop:
 
   - `Mac <https://docs.docker.com/v17.09/docker-for-mac/install>`_
   - `Windows 10 <https://docs.docker.com/v17.09/docker-for-windows/install/>`_
@@ -81,13 +103,19 @@ Prerequisites:
   - `Debian <https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/debian/>`_
   - `Fedora <https://docs.docker.com/v17.09/engine/installation/linux/docker-ce/fedora/>`_
 
-To check if the installation was successful, run
+To check if the installation was successful, open up your favorite Terminal (Mac,Linux), or the Docker Terminal (Windows)
+and try running
 
 .. code-block:: bash
 
    $ docker version
+   Client: Docker Engine - Community
+   Version:           19.03.5
+   API version:       1.40
 
-* Create a Docker Hub account at https://hub.docker.com/signup/
+This also ensures you can access the docker daemon.
+
+* Create a `Docker Hub account <https://hub.docker.com/signup/>`_
 
 Having a Docker Hub account makes it easier to share your containers with other researchers.
 
@@ -98,13 +126,13 @@ Let's login into Docker Hub to be able to push images to your repository.
    $ docker login
    # Enter username/password
 
-* Create a TACC Account at `https://portal.tacc.utexas.edu/account-request`
+* Create a `TACC Account <https://portal.tacc.utexas.edu/account-request>`_
 
 
 Working with Docker Hub images
 ==============================
 
-*Hello from Docker*
+Say *hello* from Docker
 
 Let's run a simple hello-world container using the * docker run * command
 
@@ -116,6 +144,31 @@ Let's run a simple hello-world container using the * docker run * command
 
 This simple command pulls the hello-world image from Docker Hub and prints the message.
 
+ * To verify that hello-world is now available on your local machine
+
+ .. code-block:: bash
+    $ docker images
+    REPOSITORY               TAG                 IMAGE ID            CREATED             SIZE
+    hello-world              latest              fce289e99eb9        11 months ago       1.84kB
+
+You could also try:
+
+.. code-block:: bash
+
+   $ docker inspect hello-world
+   # shows more information about container image
+
+.. code-block:: bash
+
+   $ docker --help
+   # show all docker options and summaries
+
+.. code-block:: bash
+
+   $ docker COMMAND --help
+   # show options and summaries for a particular command
+
+
 Docker Core Commands
 ====================
 
@@ -126,12 +179,10 @@ Docker Core Commands
 |                |  using username and password                         |
 +----------------+------------------------------------------------------+
 | docker run     |  *Usage: docker run -it user/imagetag*               |
-|                |                                                      |
 +----------------+------------------------------------------------------+
 | docker build   |  *Usage: docker build -t username/imagetag .*        |
 |                |  Builds a docker image from a Dockerfile in the      |
 |                |  current working directory. -t to tag the image      |
-|                |                                                      |
 +----------------+------------------------------------------------------+
 | docker images  |  List all images on the local machine                |
 +----------------+------------------------------------------------------+
@@ -150,6 +201,6 @@ Docker Core Commands
 +----------------+------------------------------------------------------+
 | docker rmi     |  Delete an image                                     |
 +----------------+------------------------------------------------------+
-| docker rm      |  *Usage: docker rm -f [container name or ID]         |
+| docker rm      |  *Usage*: docker rm -f [container name or ID]        |
 |                |  Delete a container                                  |
 +----------------+------------------------------------------------------+
